@@ -14,6 +14,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'feed.html',
 })
 export class FeedPage {
+  public objeto_feed = {
+    titulo: "Robert Koch",
+    data: "November 5, 1955",
+    descricao: "Estou criando um app incrível!...",
+    qntd_likes: 12,
+    qntd_comments: 4,
+    time_comment: "11h ago teste"
+  }
+
+
   public nome_usuario:string = "Robert Koch do Código";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
