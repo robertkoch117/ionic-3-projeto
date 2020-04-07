@@ -18,10 +18,22 @@ $ ionic start myTabs tabs
 Then, to run it, cd into `myTabs` and run:
 
 ```bash
+
+$ ionic start myApp tabs --type=ionic-angular
+
 $ ionic cordova platform add ios
 $ ionic cordova run ios
 ```
 
 Substitute ios for android if not on a Mac.
+
+### Commands used:
+
+ionic generate page Feed
+
+```bash
+$ ionic generate page Feed
+$ ionic generate page Intro
+```
 
 # ionic-3-projeto-m
