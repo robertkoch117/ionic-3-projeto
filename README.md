@@ -35,5 +35,10 @@ ionic generate page Feed
 $ ionic generate page Feed
 $ ionic generate page Intro
 ```
+localStorage Browser Commands
 
+```bash
+localStorage.clear()
+localStorage.getItem("config")
+```
 # ionic-3-projeto-m
