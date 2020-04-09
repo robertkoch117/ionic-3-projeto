@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MoovieProvider } from "../../providers/moovie/moovie";
 
 /**
  * Generated class for the FeedPage page.
@@ -12,6 +13,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-feed',
   templateUrl: 'feed.html',
+  providers: [
+    MoovieProvider
+  ]
 })
 export class FeedPage {
   public objeto_feed = {
@@ -23,9 +27,15 @@ export class FeedPage {
     time_comment: "11h ago teste"
   }
 
+  public lista_filmes = new Array<any>();
+
 
   public nome_usuario:string = "Robert Koch do Código";
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private movieProvider: MoovieProvider) {
   }
 
   public somaDoisNumeros(num1:number, num2:number):void{
@@ -33,7 +43,17 @@ export class FeedPage {
   }
 
   ionViewDidLoad() {
-    //this.somaDoisNumeros(5,15);
+    this.movieProvider.getLatestMovies().subscribe(
+      data=>{
+        const response = (data as any);
+        //const objeto_retorno = JSON.parse(response); 
+        this.lista_filmes= response.results;
+        
+        console.log(response);
+      },error => {
+        console.log(error);
+      }
+    )
   }
 
 }
