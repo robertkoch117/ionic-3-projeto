@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MoovieProvider } from "../../providers/moovie/moovie";
+import { FilmeDetalhesPage } from '../filme-detalhes/filme-detalhes';
 
 /**
  * Generated class for the FeedPage page.
@@ -24,13 +25,13 @@ export class FeedPage {
     descricao: "Estou criando um app incrível!...",
     qntd_likes: 12,
     qntd_comments: 4,
-    time_comment: "11h ago teste"
+    time_comment: "11h ago"
   }
 
   public lista_filmes = new Array<any>();
 
 
-  public nome_usuario:string = "Robert Koch do Código";
+  public nome_usuario:string = "Robert Koch";
   public loader;
   public refresher;
   public isRefreshing: boolean = false;
@@ -66,6 +67,11 @@ export class FeedPage {
 
   ionViewDidEnter() {
     this.carregarFilmes();
+  }
+
+  abrirDetalhes(filme){
+    console.log(filme);
+    this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
   }
 
   carregarFilmes(){
