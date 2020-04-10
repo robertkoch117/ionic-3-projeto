@@ -31,8 +31,9 @@ export class FeedPage {
 
 
   public nome_usuario:string = "Robert Koch do Código";
-  
   public loader;
+  public refresher;
+  public isRefreshing: boolean = false;
   
   constructor(
     public navCtrl: NavController, 
@@ -53,19 +54,36 @@ export class FeedPage {
   }
 
   public somaDoisNumeros(num1:number, num2:number):void{
-    //alert(num1+num2);
+    //alert(num1+num2); 
+  }
+
+  doRefresh(refresher) {
+    this.refresher = refresher;
+    this.isRefreshing = true;
+    
+    this.carregarFilmes();
   }
 
   ionViewDidEnter() {
+    this.carregarFilmes();
+  }
+
+  carregarFilmes(){
     this.abreCarregando();
     this.movieProvider.getLatestMovies().subscribe(
       data=>{
+
         const response = (data as any);
         //const objeto_retorno = JSON.parse(response); 
         this.lista_filmes= response.results;
         
-        this.fechaCarregando();
         console.log(response);
+
+        this.fechaCarregando();
+        if(this.isRefreshing){
+          this.refresher.complete();
+          this.isRefreshing = false;
+        }
       },error => {
         console.log(error);
         this.fechaCarregando();
