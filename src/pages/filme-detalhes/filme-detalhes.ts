@@ -27,11 +27,13 @@ export class FilmeDetalhesPage {
 
   ionViewDidEnter() {
     this.filmeid = this.navParams.get("id");
+    
     console.log("Filme Id recebido: " + this.filmeid);
     this.movieProvider.getMoviesDetails(this.filmeid).subscribe(
       data=>{
       let retorno = (data as any);
-      this.filme = JSON.parse(JSON.stringify(retorno));
+      //this.filme = JSON.parse(JSON.stringify(retorno));
+      this.filme = retorno;
       console.log("This.filme: "+ this.filme);
       console.log(retorno);
     }, error =>{

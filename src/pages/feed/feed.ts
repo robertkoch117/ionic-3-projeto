@@ -29,12 +29,13 @@ export class FeedPage {
   }
 
   public lista_filmes = new Array<any>();
-
+  public page = 1;
 
   public nome_usuario:string = "Robert Koch";
   public loader;
   public refresher;
   public isRefreshing: boolean = false;
+  public infiniteScroll;
   
   constructor(
     public navCtrl: NavController, 
@@ -71,18 +72,33 @@ export class FeedPage {
 
   abrirDetalhes(filme){
     console.log(filme);
-    this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
+    this.navCtrl.push(FilmeDetalhesPage, {id: filme.id, tagline: filme.tagline, genres: filme.genres});
   }
 
-  carregarFilmes(){
-    this.abreCarregando();
-    this.movieProvider.getLatestMovies().subscribe(
-      data=>{
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+    this.page++;
+    this.infiniteScroll = infiniteScroll;
+    this.carregarFilmes(true);
+    
+  }
 
+  carregarFilmes(newpage: boolean = false){
+    this.abreCarregando();
+    this.movieProvider.getLatestMovies(this.page).subscribe(
+      data=>{
         const response = (data as any);
         //const objeto_retorno = JSON.parse(response); 
-        this.lista_filmes= response.results;
         
+        if(newpage){
+          this.lista_filmes = this.lista_filmes.concat(response.results);
+          console.log(this.page);
+          console.log(this.lista_filmes);
+          this.infiniteScroll.complete();
+        }else{
+          this.lista_filmes= response.results;
+        }
+
         console.log(response);
 
         this.fechaCarregando();
